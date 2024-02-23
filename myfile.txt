@@ -1,5 +1,5 @@
 Hola soy windows principal tu jefe jeje
-cambio de Linux
+cambio de L1AA
 git fetch origin
 git reset --hard origin/main
 cambio linux

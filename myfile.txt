@@ -1,6 +1,6 @@
 Hola soy windows principal tu jefe jeje
 cambio de linux
-//git remote set-url origin https://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@github.com/Baruj99/Hydrogen.git
+//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//
 git fetch origin
 git reset --hard origin/main
 cambio linux

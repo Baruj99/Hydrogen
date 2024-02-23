@@ -1,2 +1,3 @@
 Hola soy windows principal tu jefe jeje
 cambio de linux
+//git remote set-url origin https://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@github.com/Baruj99/Hydrogen.git

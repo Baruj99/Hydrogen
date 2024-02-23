@@ -1,6 +1,8 @@
 Hola soy windows principal tu jefe jeje
-cambio de linux
-//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//
+cambio de L2
 git fetch origin
 git reset --hard origin/main
 cambio linux
+git add
+git commit -m "Otra cosa"
+git push

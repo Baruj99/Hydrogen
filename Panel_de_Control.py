@@ -5,7 +5,7 @@ class MiApp:
         self.root = root
         self.root.title("Rectángulo Animado")
 
-        self.canvas_width = 900  # Ancho inicial de la ventana
+        self.canvas_width = 300  # Ancho inicial de la ventana
         self.canvas_height = 500  # Altura inicial de la ventana
         self.root.geometry(f"{self.canvas_width}x{self.canvas_height}")
 
@@ -40,27 +40,37 @@ class MiApp:
         self.numero_altura = tk.Label(root, text="0.01", font=("Helvetica", 12))
         self.numero_altura.place(x=self.posicion_x + 120, y=self.extremo_inferior_y - self.altura_rectangulo + 30, anchor="w")
 
-        # Iniciar la animación con el método after de Tkinter
-        self.actualizar_altura()
+        # Botones
+        self.boton_iniciar = tk.Button(root, text="Iniciar Animación", command=self.iniciar_animacion)
+        self.boton_iniciar.place(x=10, y=90)
+
+        self.boton_detener = tk.Button(root, text="Detener Animación", command=self.detener_animacion)
+        self.boton_detener.place(x=150, y=90)
+
+        self.animacion_activa = False  # Variable para controlar si la animación está activa
+
+    def iniciar_animacion(self):
+        if not self.animacion_activa:
+            self.animacion_activa = True
+            self.actualizar_altura()
+
+    def detener_animacion(self):
+        self.animacion_activa = False
 
     def actualizar_altura(self):
-        # Variar la altura del rectángulo en cada actualización
-        if self.altura_rectangulo < self.altura_maxima:
-            self.altura_rectangulo += 1
+        if self.animacion_activa:
+            if self.altura_rectangulo < self.altura_maxima:
+                self.altura_rectangulo += 1
 
-        # Actualizar el número de altura
-        self.numero_altura.config(text=f"{self.altura_rectangulo / 100:.2f}")
+            self.numero_altura.config(text=f"{self.altura_rectangulo / 100:.2f}")
 
-        # Limpiar la representación gráfica actual del canvas
-        self.canvas.delete("all")
+            self.canvas.delete("all")
 
-        # Dibujar un rectángulo azul con el extremo inferior fijo y altura variable
-        self.canvas.create_rectangle(self.posicion_x, self.extremo_inferior_y - self.altura_rectangulo,
-                                     self.posicion_x + 100, self.extremo_inferior_y,
-                                     fill='blue')
+            self.canvas.create_rectangle(self.posicion_x, self.extremo_inferior_y - self.altura_rectangulo,
+                                         self.posicion_x + 100, self.extremo_inferior_y,
+                                         fill='blue')
 
-        # Programar la próxima actualización después de 30 milisegundos (60 FPS)
-        self.root.after(60, self.actualizar_altura)
+            self.root.after(60, self.actualizar_altura)
 
 if __name__ == '__main__':
     root = tk.Tk()

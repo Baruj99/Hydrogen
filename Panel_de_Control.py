@@ -12,7 +12,7 @@ class MiApp:
         self.canvas = tk.Canvas(root, width=self.canvas_width, height=self.canvas_height)
         self.canvas.pack()
 
-        self.altura_rectangulo = 50
+        self.altura_rectangulo = 0
         self.altura_maxima = 200  # Altura máxima del rectángulo
         self.extremo_inferior_y = 450  # Coordenada y del extremo inferior fijo
         self.posicion_x = 50  # Coordenada x del extremo izquierdo del rectángulo

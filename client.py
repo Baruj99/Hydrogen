@@ -1,20 +1,29 @@
-#Conexión MODBUS con PLC usando librería easymodbus
-#Creador: TalosElectrónico
-#Fecha: 28/04/2022
-import easymodbus.modbusClient #Importar libreria easymodbus como cliente
+import easymodbus.modbusClient
 import time
+#import easymodbus.modbusClient
+modbus_client = easymodbus.modbusClient.ModbusClient('192.168.0.20',1050) #Crar instancia para conexion en esta IP y puerto
+modbus_client.connect() #Conectar a cliente modbus
 
+c=0
 
-if __name__=="__main__":
-    modbusclient=easymodbus.modbusClient.ModbusClient('192.168.0.20',502) #Conectar con PLC en IP y puerto 205
-    modbusclient.connect()
-
-    while True:
-        HoldingRegs = modbusclient.read_holdingregisters(0,2) #Leer dos registros desde la dirección 0
-        print(HoldingRegs) #Imprime la información de los holding regs como una lista
-        print('Valor posición 0 de registro: '+str(HoldingRegs[0])) #inprimir posicion 0 del holding reg
-        discreteInputs = modbusclient.read_discreteinputs(0, 1) #Lectura de una entrada (I0.0)
-        print('Valor lectura entrada I0.0: '+str(discreteInputs)) #Imprime verdadero o falso de acuerdo al valor lógico de la entrada leida
-        modbusclient.write_single_register(2,1) #Escribe la posición 2 del array de registro de datos con el valor de 1
-        modbusclient.write_single_coil(1,1) #Activa la salida Q0.1 del PLCS7-1200
-        time.sleep(1)
+while True:
+    try:
+        modbus_client.write_single_register(c, c)	#Escribir valores a registro acorde variable
+        modbus_client.write_single_register(10, 100)	#Escribir valores a registro acorde variable
+        modbus_client.write_single_coil(6, 1)	#Activar coil 2 es decir Q0.6
+        listavalores=modbus_client.read_holdingregisters(15,4) #Leer 4 holding registers desde la posición 15
+        print ('Valor 1: '+str(listavalores[0])) #Imprimir valores leidos
+        print ('Valor 2: '+str(listavalores[1]))
+        print ('Valor 3: '+str(listavalores[2]))
+        print ('Valor 4: '+str(listavalores[3]))
+        Entradas = modbus_client.read_discreteinputs(0,2)	#Leer dos entradas (I0.0, I0.1)
+        print ("I0.0: "+str(Entradas[0]))
+        print ("I0.1: "+str(Entradas[1]))
+        c=c+1
+        if c>8:
+            c=0
+        time.sleep(0.3)
+    except KeyboardInterrupt:
+        break
+    
+modbus_client.close() #Cerrar cliente modbus
